@@ -7,7 +7,7 @@
         home-manager.inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    outputs = {self, nixpkgs, ...}: {
+    outputs = {self, nixpkgs, home-manager, ...}: {
         nixosConfigurations = {
             vm-niko-test = nixpkgs.lib.nixosSystem {
                 system = "x86_64-linux";
