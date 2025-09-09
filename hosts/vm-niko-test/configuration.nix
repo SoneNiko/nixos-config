@@ -112,6 +112,7 @@
     htop
     tree
     direnv
+    home-manager
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -143,8 +144,5 @@
 
   # Enable vbox guest additions
   virtualisation.virtualbox.guest.enable = true;
-
-  programs.home-manager.enable = true;
-  home-manager.users.niko = import ./home-manager-niko.nix;
 
 }

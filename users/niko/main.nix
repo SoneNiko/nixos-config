@@ -2,6 +2,8 @@
   home.username = "niko";
   home.homeDirectory = "/home/niko";
 
+  home.stateVersion = "25.05";
+
   programs.git = {
     enable = true;
     userName = "Nikolas Heise";

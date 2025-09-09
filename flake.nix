@@ -13,7 +13,15 @@
                 system = "x86_64-linux";
                 modules = [
                     ./hosts/vm-niko-test/configuration.nix
-                    home-manager.nixosModules.home-manager
+                ];
+            };
+        };
+
+        homeConfigurations = {
+            niko = home-manager.lib.homeManagerConfiguration {
+                pkgs = import nixpkgs { system = "x86_64-linux"; };
+                modules = [
+                    ./users/niko/main.nix
                 ];
             };
         };
