@@ -142,6 +142,9 @@
   system.stateVersion = "25.05"; # Did you read the comment?
 
   # Enable vbox guest additions
-  virtualisation.virtualbox.guest.enable = true;  
+  virtualisation.virtualbox.guest.enable = true;
+
+  programs.home-manager.enable = true;
+  home-manager.users.niko = import ./home-manager-niko.nix;
 
 }
