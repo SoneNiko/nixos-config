@@ -6,6 +6,6 @@ git commit -m "Application of config change at $timestamp"
 
 sudo nixos-rebuild switch --flake .#vm-niko-test
 
-home-manager switch --flake .#niko
+home-manager switch --extra-experimental-features 'nix-command flakes' --flake .#niko
 
 

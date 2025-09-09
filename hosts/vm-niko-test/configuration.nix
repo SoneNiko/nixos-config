@@ -114,6 +114,7 @@
     direnv
     home-manager
     gh
+    tldr
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
