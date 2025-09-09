@@ -6,6 +6,11 @@
     enable = true;
     userName = "Nikolas Heise";
     userEmail = "nikolasheise683@gmail.com";
+    lfs.enable = true;
+    extraConfig = {
+      push = { autoSetupRemote = true; };
+      init.defaultBranch = "main";
+    };
   };
 
   
