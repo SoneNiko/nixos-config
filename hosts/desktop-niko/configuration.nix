@@ -125,7 +125,6 @@
     spotify
     discord-canary
     glxinfo
-    nvidia-xconfig
     libva-utils
     glmark2
   ];
