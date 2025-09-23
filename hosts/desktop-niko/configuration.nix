@@ -124,6 +124,10 @@
     tldr
     spotify
     discord-canary
+    glxinfo
+    nvidia-xconfig
+    libva-utils
+    glmark2
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
