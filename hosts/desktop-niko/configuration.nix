@@ -127,6 +127,7 @@
     glxinfo
     libva-utils
     glmark2
+    protonup-qt
   ];
 
   programs.steam = {
