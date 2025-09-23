@@ -18,7 +18,7 @@
   programs.vivaldi = {
     nativeMessagingHosts = [
       pkgs.kdePackages.plasma-browser-integration
-    ]
+    ];
   };
 
   
