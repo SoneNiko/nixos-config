@@ -56,6 +56,8 @@
     nvidia = {
       package = config.boot.kernelPackages.nvidiaPackages.stable;
 
+      open = true;
+
       # This sets nvidia-drm.modeset=1
       modesetting.enable = true;
     };
