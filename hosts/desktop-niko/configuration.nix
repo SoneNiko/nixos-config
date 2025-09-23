@@ -128,6 +128,8 @@
     libva-utils
     glmark2
     protonup-qt
+    vivaldi
+    vivaldi-ffmpeg-codecs
   ];
 
   programs.steam = {

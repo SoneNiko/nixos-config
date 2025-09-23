@@ -15,6 +15,12 @@
     };
   };
 
+  programs.vivaldi = {
+    nativeMessagingHosts = [
+      pkgs.kdePackages.plasma-browser-integration
+    ]
+  };
+
   
   home.packages = with pkgs; [
     
