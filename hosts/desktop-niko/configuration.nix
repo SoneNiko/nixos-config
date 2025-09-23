@@ -130,6 +130,7 @@
     protonup-qt
     vivaldi
     vivaldi-ffmpeg-codecs
+    easyeffects
   ];
 
   xdg.mime.defaultApplications = {
