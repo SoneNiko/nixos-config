@@ -15,6 +15,12 @@
                     ./hosts/vm-niko-test/configuration.nix
                 ];
             };
+            desktop-niko = nixpkgs.lib.nixosSystem {
+                system = "x86_64-linux";
+                modules = [
+                    ./hosts/desktop-niko/configuration.nix
+                ];
+            };
         };
 
         homeConfigurations = {
