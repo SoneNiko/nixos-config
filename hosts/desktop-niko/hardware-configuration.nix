@@ -54,7 +54,7 @@
       ];
     };
     nvidia = {
-      package = config.boot.kernelPackages.nvidiaPackages.beta;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
 
       # This sets nvidia-drm.modeset=1
       modesetting.enable = true;
