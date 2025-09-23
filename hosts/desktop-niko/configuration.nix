@@ -122,6 +122,8 @@
     home-manager
     gh
     tldr
+    spotify
+    discord-canary
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
