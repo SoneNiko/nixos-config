@@ -132,6 +132,12 @@
     vivaldi-ffmpeg-codecs
   ];
 
+  xdg.mime.defaultApplications = {
+    "text/html" = "vivaldi.desktop";
+    "x-scheme-handler/http" = "vivaldi.desktop";
+    "x-scheme-handler/https" = "vivaldi.desktop";
+  };
+
   programs.steam = {
     enable = true;
     remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
