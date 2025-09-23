@@ -61,8 +61,6 @@
 
       # This sets nvidia-drm.modeset=1
       modesetting.enable = true;
-
-      prime.offload.enable = true;
     };
   };
   environment.systemPackages = with pkgs; [
