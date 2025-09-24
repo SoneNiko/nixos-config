@@ -131,6 +131,7 @@
     vivaldi
     vivaldi-ffmpeg-codecs
     easyeffects
+    steam-tui
   ];
 
   xdg.mime.defaultApplications = {
