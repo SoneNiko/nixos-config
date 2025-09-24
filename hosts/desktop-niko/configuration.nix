@@ -135,6 +135,8 @@
     steamcmd
   ];
 
+  services.tailscale.enable = true;
+
   xdg.mime.defaultApplications = {
     "text/html" = "vivaldi.desktop";
     "x-scheme-handler/http" = "vivaldi.desktop";
