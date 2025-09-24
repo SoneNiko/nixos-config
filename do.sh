@@ -1,8 +1,10 @@
-git add .
+# git add .
 
-timestamp=$(date +%s)
+# timestamp=$(date +%s)
 
-git commit -m "Application of config change at $timestamp"
+# git commit -m "Application of config change at $timestamp"
+
+oco
 
 sudo nixos-rebuild switch --flake .#desktop-niko
 
