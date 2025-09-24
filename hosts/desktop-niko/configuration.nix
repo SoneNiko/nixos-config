@@ -133,6 +133,7 @@
     easyeffects
     steam-tui
     steamcmd
+    opencommit
   ];
 
   services.tailscale.enable = true;
