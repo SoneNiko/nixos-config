@@ -12,6 +12,10 @@
     extraConfig = {
       push = { autoSetupRemote = true; };
       init.defaultBranch = "main";
+
+      # Configure Commit Signing
+      commit.gpgsign = true;
+      gpg.format = 
     };
   };
 
