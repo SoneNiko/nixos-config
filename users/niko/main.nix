@@ -15,7 +15,6 @@
 
       # Configure Commit Signing
       commit.gpgsign = true;
-      gpg.format = 
     };
   };
 
