@@ -134,7 +134,6 @@
     steam-tui
     steamcmd
     opencommit
-    pinentry
   ];
 
   services.tailscale.enable = true;
@@ -158,10 +157,10 @@
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
-    pinentryPackage = pkgs.pinentry.qt;
   };
 
   # List services that you want to enable:
+  services.pcscd.enable = true;
 
   # Enable the OpenSSH daemon.
   # services.openssh.enable = true;
