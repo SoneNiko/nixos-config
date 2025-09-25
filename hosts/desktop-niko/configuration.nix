@@ -134,6 +134,7 @@
     steam-tui
     steamcmd
     opencommit
+    heroic
   ];
 
   services.tailscale.enable = true;
