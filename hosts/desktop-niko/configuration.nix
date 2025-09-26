@@ -135,6 +135,7 @@
     steamcmd
     opencommit
     heroic
+    beeper
   ];
 
   services.tailscale.enable = true;
