@@ -35,8 +35,8 @@
     };
   };
   systemd.user.services.onedrive = {
-    enable = "true";
-  }
+    enable = true;
+  };
 
   programs.vivaldi = {
     nativeMessagingHosts = [
