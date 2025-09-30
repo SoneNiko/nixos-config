@@ -135,8 +135,10 @@
     steamcmd
     opencommit
     heroic
-    beeper
+    freecad
   ];
+
+  
 
   services.tailscale.enable = true;
 
