@@ -34,7 +34,7 @@
       threads = "14";
     };
   };
-  systemd.user.services.onedrive = {
+  systemd.user.services.onedrive-launcher = {
     enable = true;
   };
   
