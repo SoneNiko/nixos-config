@@ -15,6 +15,7 @@
 
       # Configure Commit Signing
       commit.gpgsign = true;
+      user.signingkey = "891AFE673465C446";
     };
   };
 
@@ -28,7 +29,6 @@
       display_transfer_metrics = "true";
       enable_logging = "true";
       log_dir = "/var/log/onedrive/";
-      notify_file_actions = "enable";
       recycle_bin_path = "/home/niko/.local/share/Trash/files/";
       sync_dir_permissions = "700";
       sync_file_permissions = "700";
