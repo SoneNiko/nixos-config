@@ -34,7 +34,9 @@
       threads = "14";
     };
   };
-  service.onedrive.enable = "true";
+  systemd.user.services.onedrive = {
+    enable = "true";
+  }
 
   programs.vivaldi = {
     nativeMessagingHosts = [
