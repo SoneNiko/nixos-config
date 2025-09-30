@@ -4,6 +4,22 @@
 
   home.stateVersion = "25.05";
 
+  # programs.bash = {
+  #   enable = true;
+  #   enableCompletion = true;
+  #   enableVteIntegration = true;
+  #   bashrcExtra = 
+  #     ''
+        
+  #     '';
+  #   shellAliases = {
+  #     ls = "lsd";
+  #   };
+    
+  # };
+
+  # environment.pathsToLink = [ "/share/bash-completion" ];
+
   programs.git = {
     enable = true;
     userName = "Nikolas Heise";

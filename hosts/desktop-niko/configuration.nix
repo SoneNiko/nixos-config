@@ -136,9 +136,9 @@
     opencommit
     heroic
     freecad
+    jetbrains-mono
+    localsend
   ];
-
-  
 
   services.tailscale.enable = true;
 
