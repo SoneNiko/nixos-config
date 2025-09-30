@@ -35,6 +35,12 @@
     };
   };
   
+
+  programs.oh-my-posh = {
+    enable = true;
+    enabeBashIntegration = true;
+    useTheme = "tokyo";
+  };
   
 
   programs.vivaldi = {
