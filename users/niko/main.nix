@@ -38,7 +38,7 @@
 
   programs.oh-my-posh = {
     enable = true;
-    enabeBashIntegration = true;
+    enableBashIntegration = true;
     useTheme = "tokyo";
   };
   
