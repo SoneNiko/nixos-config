@@ -24,7 +24,6 @@
   programs.onedrive = {
     enable = true;
     settings = {
-      cleanup_local_files = "true";
       display_running_config = "true";
       display_transfer_metrics = "true";
       enable_logging = "true";
