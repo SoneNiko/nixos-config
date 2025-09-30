@@ -34,6 +34,7 @@
       threads = "14";
     };
   };
+  service.onedrive.enable = "true";
 
   programs.vivaldi = {
     nativeMessagingHosts = [
