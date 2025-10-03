@@ -14,6 +14,8 @@
     #   '';
     shellAliases = {
       ls = "lsd";
+      la = "lsd -la";
+      l = "lsd -l";
     };
     
   };
