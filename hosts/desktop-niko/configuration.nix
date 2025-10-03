@@ -147,6 +147,8 @@
     ripgrep
     ripgrep-all
     fzf
+    nexusmods-app-unfree
+    protontricks
   ];
 
 
