@@ -139,32 +139,32 @@
     localsend
   ];
 
-  fonts.packages = with pkgs; [
-    noto-fonts
-    noto-fonts-emoji
-    noto-fonts-cjk
-    font-awesome
+  # fonts.packages = with pkgs; [
+  #   noto-fonts
+  #   noto-fonts-emoji
+  #   noto-fonts-cjk
+  #   font-awesome
 
-    jetbrains-mono
-    fira-code
-    hack-font
-    source-code-pro
+  #   jetbrains-mono
+  #   fira-code
+  #   hack-font
+  #   source-code-pro
 
-    (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-  ];
+  #   (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+  # ];
 
-  # Font configuration  
-  fonts = {
-    enableDefaultPackages = true;
+  # # Font configuration  
+  # fonts = {
+  #   enableDefaultPackages = true;
     
-    fontconfig = {
-      enable = true;
-      defaultFonts = {
-        monospace = [ "JetBrains Mono" ];
+  #   fontconfig = {
+  #     enable = true;
+  #     defaultFonts = {
+  #       monospace = [ "JetBrains Mono" ];
         
-      };
-    };
-  };
+  #     };
+  #   };
+  # };
 
   services.tailscale.enable = true;
 

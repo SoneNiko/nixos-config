@@ -26,7 +26,7 @@
     userEmail = "nikolasheise683@gmail.com";
     lfs.enable = true;
     extraConfig = {
-      push = { autoSetupRemote = true; };
+      push.autoSetupRemote = true;
       init.defaultBranch = "main";
 
       # Configure Commit Signing
