@@ -137,6 +137,8 @@
     heroic
     freecad
     localsend
+    lsd
+    bat
   ];
 
 
