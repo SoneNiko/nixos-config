@@ -139,6 +139,10 @@
     localsend
     lsd
     bat
+    ghostty
+    ripgrep
+    ripgrep-all
+    fzf
   ];
 
 

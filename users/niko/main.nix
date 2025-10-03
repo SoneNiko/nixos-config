@@ -4,6 +4,13 @@
 
   home.stateVersion = "25.05";
 
+  home.sessionVariables = {
+    EDITOR = "code";
+    VISUAL = "code";
+    BROWSER = "vivaldi";
+    TERMINAL = "ghostty";
+  };
+
   programs.bash = {
     enable = true;
     enableCompletion = true;
@@ -36,6 +43,8 @@
       user.signingkey = "891AFE673465C446";
     };
   };
+
+  
 
 
   # https://github.com/abraunegg/onedrive/blob/master/config are the valid options
