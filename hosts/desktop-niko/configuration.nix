@@ -106,9 +106,9 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-  environment.kde.excludePackages = with pkgs; [
-    kdePackages.konsole
-  ];
+  # environment.kde.excludePackages = with pkgs; [
+  #   kdePackages.konsole
+  # ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
