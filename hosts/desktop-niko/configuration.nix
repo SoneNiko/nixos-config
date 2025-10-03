@@ -139,32 +139,20 @@
     localsend
   ];
 
-  # fonts.packages = with pkgs; [
-  #   noto-fonts
-  #   noto-fonts-emoji
-  #   noto-fonts-cjk
-  #   font-awesome
 
-  #   jetbrains-mono
-  #   fira-code
-  #   hack-font
-  #   source-code-pro
-
-  #   (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-  # ];
-
-  # # Font configuration  
-  # fonts = {
-  #   enableDefaultPackages = true;
+  # Font configuration  
+  fonts = {
+    enableDefaultPackages = true;
+    packages = with pkgs; [
+      nerd-fonts.jetbrains-mono
+    ];
     
-  #   fontconfig = {
-  #     enable = true;
-  #     defaultFonts = {
-  #       monospace = [ "JetBrains Mono" ];
-        
-  #     };
-  #   };
-  # };
+    fontconfig = {
+      defaultFonts = {
+        monospace = [ "JetBrains Mono" ];
+      };
+    };
+  };
 
   services.tailscale.enable = true;
 
