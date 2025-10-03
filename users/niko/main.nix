@@ -66,7 +66,7 @@
   programs.oh-my-posh = {
     enable = true;
     enableBashIntegration = true;
-    useTheme = "illusi0n";
+    useTheme = "slimfat";
   };
   
 
