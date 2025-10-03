@@ -4,19 +4,19 @@
 
   home.stateVersion = "25.05";
 
-  # programs.bash = {
-  #   enable = true;
-  #   enableCompletion = true;
-  #   enableVteIntegration = true;
-  #   bashrcExtra = 
-  #     ''
+  programs.bash = {
+    enable = true;
+    enableCompletion = true;
+    enableVteIntegration = true;
+    # bashrcExtra = 
+    #   ''
         
-  #     '';
-  #   shellAliases = {
-  #     ls = "lsd";
-  #   };
+    #   '';
+    shellAliases = {
+      ls = "lsd";
+    };
     
-  # };
+  };
 
   # environment.pathsToLink = [ "/share/bash-completion" ];
 
