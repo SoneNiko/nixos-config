@@ -152,6 +152,7 @@
     wine
     winetricks
     signal-desktop
+    whatsie
   ];
 
 
