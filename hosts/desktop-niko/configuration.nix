@@ -149,6 +149,9 @@
     fzf
     nexusmods-app-unfree
     protontricks
+    wine
+    winetricks
+    signal-desktop
   ];
 
 
