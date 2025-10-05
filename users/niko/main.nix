@@ -9,6 +9,7 @@
     VISUAL = "code";
     BROWSER = "vivaldi";
     TERMINAL = "ghostty";
+    JAVA_HOME = "/home/niko/.jdks/corretto-24.0.2/";
   };
 
   programs.bash = {
