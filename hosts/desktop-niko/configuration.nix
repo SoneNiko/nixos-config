@@ -154,6 +154,7 @@
     signal-desktop
   ];
 
+  programs.nix-ld.enable = true;
 
   # Font configuration  
   fonts = {
