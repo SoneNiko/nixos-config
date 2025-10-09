@@ -22,6 +22,11 @@
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # Enable flakes and other experimental features
+  nix.settings = {
+    experimental-features = [ "nix-command" "flakes" ];
+  };
+
   networking.hostName = "DESKTOP-NIKO"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -152,6 +157,7 @@
     wine
     winetricks
     signal-desktop
+    android-studio
   ];
 
   programs.nix-ld.enable = true;

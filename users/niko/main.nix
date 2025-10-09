@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, android-nixpkgs, ... }: {
   home.username = "niko";
   home.homeDirectory = "/home/niko";
 
@@ -10,6 +10,8 @@
     BROWSER = "vivaldi";
     TERMINAL = "ghostty";
     JAVA_HOME = "/home/niko/.jdks/corretto-24.0.2/";
+    ANDROID_HOME = "${config.home.homeDirectory}/.nix-profile/share/android-sdk";
+    ANDROID_SDK_ROOT = "${config.home.homeDirectory}/.nix-profile/share/android-sdk";
   };
 
   programs.bash = {
@@ -79,6 +81,18 @@
 
   
   home.packages = with pkgs; [
-    
+    # Android SDK from android-nixpkgs
+    (android-nixpkgs.sdk.x86_64-linux (sdkPkgs: with sdkPkgs; [
+      cmdline-tools-latest
+      build-tools-36-0-0
+      platform-tools
+      platforms-android-36
+      emulator
+      sources-android-36
+      # Add more packages as needed:
+      # build-tools-33-0-3
+      # platforms-android-33
+      # system-images-android-34-google-apis-x86-64
+    ]))
   ];
 }
