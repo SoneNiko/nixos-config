@@ -89,10 +89,7 @@
       platforms-android-36
       emulator
       sources-android-36
-      # Add more packages as needed:
-      # build-tools-33-0-3
-      # platforms-android-33
-      # system-images-android-34-google-apis-x86-64
+      system-images-android-36-google-apis-x86-64
     ]))
   ];
 }

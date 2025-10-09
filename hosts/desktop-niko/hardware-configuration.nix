@@ -49,7 +49,7 @@
 
       extraPackages = with pkgs; [
         vaapiVdpau
-        libvdpau-va-gl
+        # libvdpau-va-gl  # Temporarily disabled due to build issues
 
         nvidia-vaapi-driver
       ];
