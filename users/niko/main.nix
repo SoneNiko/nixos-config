@@ -62,6 +62,7 @@
     };
     enableBashIntegration = true;
     installBatSyntax = true;
+    enable = true;
     
   };
 
