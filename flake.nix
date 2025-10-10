@@ -39,6 +39,7 @@
                 modules = [
                     ./users/niko/main.nix
                 ];
+                backupFileExtension = "backup";
             };
         };
     };
