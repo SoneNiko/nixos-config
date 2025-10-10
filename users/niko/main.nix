@@ -55,6 +55,16 @@
     };
   };
 
+
+  programs.ghostty = {
+    settings = {
+      theme = "Dark Modern";
+    };
+    enableBashIntegration = true;
+    installBatSyntax = true;
+    
+  };
+
   
 
 
