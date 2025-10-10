@@ -6,11 +6,11 @@
 
 oco
 
-nix --extra-experimental-features 'nix-command flakes' flake update
+nix flake update
 
 sudo nixos-rebuild switch --upgrade --flake .#desktop-niko
 
-home-manager switch --extra-experimental-features 'nix-command flakes' --flake .#niko
+home-manager switch --flake .#niko
 
 
 
