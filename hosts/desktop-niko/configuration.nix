@@ -5,6 +5,7 @@
 { config, pkgs, ... }:
 
 {
+  home-manager.backupFileExtension = "backup";
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
