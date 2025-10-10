@@ -22,6 +22,14 @@
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
+  # Enable KVM virtualization
+  virtualisation = {
+    libvirtd.enable = true;
+    spiceUSBRedirection.enable = true;
+    # Enable nested virtualization for better Android emulator performance
+    kvmgt.enable = true;
+  };
+
   # Enable flakes and other experimental features
   nix.settings = {
     experimental-features = [ "nix-command" "flakes" ];
@@ -98,7 +106,7 @@
   users.users.niko = {
     isNormalUser = true;
     description = "Nikolas Heise";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [ "networkmanager" "wheel" "adbusers" "kvm" ];
     packages = with pkgs; [
       kdePackages.kate
     #  thunderbird
@@ -108,8 +116,11 @@
   # Install firefox.
   programs.firefox.enable = true;
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  # Allow unfree packages and accept Android SDK license
+  nixpkgs.config = {
+    allowUnfree = true;
+    android_sdk.accept_license = true;
+  };
 
   # environment.kde.excludePackages = with pkgs; [
   #   kdePackages.konsole
@@ -157,8 +168,20 @@
     wine
     winetricks
     signal-desktop
-    android-studio
+    
+    # KVM and virtualization tools
+    qemu
+    libvirt
   ];
+
+  # Enable Android development environment
+  programs.adb.enable = true;
+  
+  # Enable hardware acceleration for Android emulator
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
 
   programs.nix-ld.enable = true;
 

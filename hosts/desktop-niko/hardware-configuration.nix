@@ -49,9 +49,12 @@
 
       extraPackages = with pkgs; [
         vaapiVdpau
-        libvdpau-va-gl 
+        # libvdpau-va-gl  # Broken upstream - CMake compatibility issue
 
         nvidia-vaapi-driver
+        vulkan-loader
+        vulkan-validation-layers
+        vulkan-tools
       ];
     };
     nvidia = {
