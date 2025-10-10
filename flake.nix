@@ -24,6 +24,8 @@
             };
         };
 
+        home-manager.backupFileExtension = "backup";
+
         homeConfigurations = {
             niko = home-manager.lib.homeManagerConfiguration {
                 pkgs = import nixpkgs { 
@@ -39,7 +41,7 @@
                 modules = [
                     ./users/niko/main.nix
                 ];
-                backupFileExtension = "backup";
+                
             };
         };
     };
