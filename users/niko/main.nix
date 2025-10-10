@@ -1,4 +1,5 @@
 { config, pkgs, pkgs-stable, ... }: {
+  home-manager.backupFileExtension = "backup";
   # Allow unfree packages for Android SDK
   nixpkgs.config = {
     allowUnfree = true;
