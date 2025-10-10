@@ -1,10 +1,12 @@
-{ config, pkgs, pkgs-stable, ... }: {
+# users/niko/main.nix
+{ pkgs, lib, ... }:
+{
   # Allow unfree packages for Android SDK
   nixpkgs.config = {
     allowUnfree = true;
     android_sdk.accept_license = true;
   };
-  
+
   home.username = "niko";
   home.homeDirectory = "/home/niko";
 
@@ -16,29 +18,17 @@
     BROWSER = "vivaldi";
     TERMINAL = "ghostty";
     JAVA_HOME = "/home/niko/.jdks/corretto-24.0.2/";
-    ANDROID_HOME = "${config.home.homeDirectory}/.android-sdk";
-    ANDROID_SDK_ROOT = "${config.home.homeDirectory}/.android-sdk";
-    # Make sure Android tools are in PATH
-    PATH = "${config.home.homeDirectory}/.android-sdk/platform-tools:${config.home.homeDirectory}/.android-sdk/tools:${config.home.homeDirectory}/.android-sdk/tools/bin:$PATH";
+    ANDROID_HOME = "/home/niko/.android-sdk";
+    ANDROID_SDK_ROOT = "/home/niko/.android-sdk";
+    PATH = "/home/niko/.android-sdk/platform-tools:/home/niko/.android-sdk/tools:/home/niko/.android-sdk/tools/bin:$PATH";
   };
 
   programs.bash = {
     enable = true;
     enableCompletion = true;
     enableVteIntegration = true;
-    # bashrcExtra = 
-    #   ''
-        
-    #   '';
-    shellAliases = {
-      ls = "lsd";
-      la = "lsd -la";
-      l = "lsd -l";
-    };
-    
+    shellAliases = { ls = "lsd"; la = "lsd -la"; l = "lsd -l"; };
   };
-
-  # environment.pathsToLink = [ "/share/bash-completion" ];
 
   programs.git = {
     enable = true;
@@ -48,26 +38,18 @@
     extraConfig = {
       push.autoSetupRemote = true;
       init.defaultBranch = "main";
-
       # Configure Commit Signing
       commit.gpgsign = true;
       user.signingkey = "891AFE673465C446";
     };
   };
 
-
   programs.ghostty = {
-    settings = {
-      theme = "Dark Modern";
-    };
+    settings = { theme = "Dark Modern"; };
     enableBashIntegration = true;
     installBatSyntax = true;
     enable = true;
-    
   };
-
-  
-
 
   # https://github.com/abraunegg/onedrive/blob/master/config are the valid options
   programs.onedrive = {
@@ -83,14 +65,12 @@
       threads = "14";
     };
   };
-  
 
   programs.oh-my-posh = {
     enable = true;
     enableBashIntegration = true;
     useTheme = "slimfat";
   };
-  
 
   programs.vivaldi = {
     nativeMessagingHosts = [
@@ -98,11 +78,10 @@
     ];
   };
 
-  
   home.packages = with pkgs; [
     # Android development - Complete setup for API 36
     android-studio
-    
+
     # Android SDK with all necessary components for API 36
     (androidenv.composeAndroidPackages {
       cmdLineToolsVersion = "11.0";
@@ -131,19 +110,20 @@
     # Additional useful tools for Android development
     scrcpy  # Screen mirroring for Android devices
     gradle  # Build tool (though Android Studio includes this)
-  ] ++ (with pkgs-stable; [
-    # JetBrains IDEs from stable nixpkgs (to avoid libdbm CMake issues)
-    jetbrains.idea-ultimate
-    jetbrains.rider
-    jetbrains.pycharm-professional
-    jetbrains.rust-rover
-  ]);
+  ] ++ [
+    # JetBrains IDEs (from the same pkgs set); if you specifically need
+    # stable nixpkgs packages, consider pulling them directly in the
+    # flake inputs and referencing them explicitly.
+    pkgs.jetbrains.idea-ultimate
+    pkgs.jetbrains.rider
+    pkgs.jetbrains.pycharm-professional
+    pkgs.jetbrains.rust-rover
+  ];
 
-  # Create symlink for Android SDK to make it accessible to Android Studio
-  home.activation.androidSdk = config.lib.dag.entryAfter ["writeBoundary"] ''
-    $DRY_RUN_CMD mkdir -p ${config.home.homeDirectory}
-    if [ ! -L ${config.home.homeDirectory}/.android-sdk ]; then
-      $DRY_RUN_CMD ln -sf ${config.home.homeDirectory}/.nix-profile/libexec/android-sdk ${config.home.homeDirectory}/.android-sdk
+  home.activation.androidSdk = ''
+    mkdir -p /home/niko
+    if [ ! -L /home/niko/.android-sdk ]; then
+      ln -sf /home/niko/.nix-profile/libexec/android-sdk /home/niko/.android-sdk
     fi
   '';
 }

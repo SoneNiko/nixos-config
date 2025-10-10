@@ -1,8 +1,5 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
-{ config, pkgs, ... }:
+# hosts/desktop-niko/configuration.nix
+{ config, pkgs, pkgsStable, ... }:
 
 {
   imports =
@@ -36,11 +33,6 @@
   };
 
   networking.hostName = "DESKTOP-NIKO"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -64,7 +56,6 @@
   };
 
   # Enable the X11 windowing system.
-  # You can disable this if you're only using the Wayland session.
   services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
@@ -91,26 +82,14 @@
     alsa.enable = true;
     alsa.support32Bit = true;
     pulse.enable = true;
-    # If you want to use JACK applications, uncomment this
-    #jack.enable = true;
-
-    # use the example session manager (no others are packaged yet so this is enabled by default,
-    # no need to redefine it in your config for now)
-    #media-session.enable = true;
   };
 
-  # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  # Define a user account. Don't forget to set a password with ‘passwd’.
+  # Define a user account.
   users.users.niko = {
     isNormalUser = true;
     description = "Nikolas Heise";
     extraGroups = [ "networkmanager" "wheel" "adbusers" "kvm" ];
-    packages = with pkgs; [
-      kdePackages.kate
-    #  thunderbird
-    ];
+    packages = with pkgs; [ kdePackages.kate ];
   };
 
   # Install firefox.
@@ -122,55 +101,11 @@
     android_sdk.accept_license = true;
   };
 
-  # environment.kde.excludePackages = with pkgs; [
-  #   kdePackages.konsole
-  # ];
-
-  # List packages installed in system profile. To search, run:
-  # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    git
-    vim
-    wget
-    vscode
-    jetbrains-toolbox
-    texliveFull
-    htop
-    tree
-    direnv
-    home-manager
-    gh
-    tldr
-    spotify
-    discord-canary
-    glxinfo
-    libva-utils
-    glmark2
-    protonup-qt
-    vivaldi
-    vivaldi-ffmpeg-codecs
-    easyeffects
-    steam-tui
-    steamcmd
-    opencommit
-    heroic
-    freecad
-    localsend
-    lsd
-    bat
-    ripgrep
-    ripgrep-all
-    fzf
-    nexusmods-app-unfree
-    protontricks
-    wine
-    winetricks
-    signal-desktop
-    
-    # KVM and virtualization tools
-    qemu
-    libvirt
+    git vim wget vscode jetbrains-toolbox texliveFull htop tree direnv home-manager gh tldr spotify
+    discord-canary glxinfo libva-utils glmark2 protonup-qt vivaldi vivaldi-ffmpeg-codecs easyeffects
+    steam-tui steamcmd opencommit heroic freecad localsend lsd bat ripgrep ripgrep-all fzf
+    nexusmods-app-unfree protontricks wine winetricks signal-desktop qemu libvirt
   ];
 
   # Enable Android development environment
@@ -184,17 +119,12 @@
 
   programs.nix-ld.enable = true;
 
-  # Font configuration  
+  # Font configuration
   fonts = {
     enableDefaultPackages = true;
-    packages = with pkgs; [
-      nerd-fonts.jetbrains-mono
-    ];
-    
+    packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
     fontconfig = {
-      defaultFonts = {
-        monospace = [ "JetBrainsMono Nerd Font" ];
-      };
+      defaultFonts = { monospace = [ "JetBrainsMono Nerd Font" ]; };
     };
   };
 
@@ -208,37 +138,31 @@
 
   programs.steam = {
     enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-    localNetworkGameTransfers.openFirewall = true; # Open ports in the firewall for Steam Local Network Game Transfers
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+    localNetworkGameTransfers.openFirewall = true;
   };
 
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
   programs.gnupg.agent = {
     enable = true;
     enableSSHSupport = true;
   };
 
-  # List services that you want to enable:
   services.pcscd.enable = true;
 
-  # Enable the OpenSSH daemon.
-  # services.openssh.enable = true;
+  # This value determines the NixOS release for stateful defaults
+  system.stateVersion = "25.05";
 
-  # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
-  # Or disable the firewall altogether.
-  # networking.firewall.enable = false;
+  # ---- Home Manager as a NixOS module ----
 
-  # This value determines the NixOS release from which the default
-  # settings for stateful data, like file locations and database versions
-  # on your system were taken. It‘s perfectly fine and recommended to leave
-  # this value at the release version of the first install of this system.
-  # Before changing this value read the documentation for this option
-  # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
-  system.stateVersion = "25.05"; # Did you read the comment?
+  # Make Home Manager create backups (append `.backup`) instead of aborting on conflicts
+  home-manager.backupFileExtension = "backup";
 
+  # Provide the home-manager user module (import the user-specific home config)
+  # Path is relative to this file: hosts/desktop-niko -> users/niko/main.nix
+  # Register the module fragment so the NixOS/home-manager module system
+  # supplies the usual `config`, `pkgs`, `lib`, etc. arguments.
+  home-manager.users.niko = {
+    imports = [ ../../users/niko/main.nix ];
+  };
 }

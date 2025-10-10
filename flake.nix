@@ -1,48 +1,40 @@
+# flake.nix
 {
-    description = "Default NixOs configuration flake";
+  description = "NixOS + Home Manager flake (desktop-niko + vm-niko-test) with Home Manager enabled as a NixOS module";
 
-    inputs = {
-        nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-        nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
-        home-manager.url = "github:nix-community/home-manager";
-        home-manager.inputs.nixpkgs.follows = "nixpkgs";
-    };
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.11";
+    home-manager.url = "github:nix-community/home-manager";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+  };
 
-    outputs = {self, nixpkgs, nixpkgs-stable, home-manager, ...}: {
-        nixosConfigurations = {
-            vm-niko-test = nixpkgs.lib.nixosSystem {
-                system = "x86_64-linux";
-                modules = [
-                    ./hosts/vm-niko-test/configuration.nix
-                ];
-            };
-            desktop-niko = nixpkgs.lib.nixosSystem {
-                system = "x86_64-linux";
-                modules = [
-                    ./hosts/desktop-niko/configuration.nix
-                ];
-            };
+  outputs = { self, nixpkgs, nixpkgs-stable, home-manager, ... }:
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs { inherit system; };
+      hm = home-manager;
+      pkgsStable = import nixpkgs-stable { inherit system; };
+    in {
+      nixosConfigurations = {
+        desktop-niko = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./hosts/desktop-niko/configuration.nix
+            hm.nixosModules.home-manager
+          ];
+          # make pkgs-stable available to home modules that reference it
+          specialArgs = { inherit hm pkgsStable; };
         };
+      };
 
-        home-manager.backupFileExtension = "backup";
-
-        homeConfigurations = {
-            niko = home-manager.lib.homeManagerConfiguration {
-                pkgs = import nixpkgs { 
-                    system = "x86_64-linux"; 
-                    config.allowUnfree = true;
-                };
-                extraSpecialArgs = { 
-                    pkgs-stable = import nixpkgs-stable { 
-                        system = "x86_64-linux"; 
-                        config.allowUnfree = true;
-                    };
-                };
-                modules = [
-                    ./users/niko/main.nix
-                ];
-                
-            };
+      # Provide a flake-level homeConfiguration so `home-manager --flake .#niko`
+      # and `home-manager switch --flake .#niko` can find an activationPackage.
+      homeConfigurations = {
+        niko = hm.lib.homeManagerConfiguration {
+          pkgs = pkgs;
+          modules = [ ./users/niko/main.nix ];
         };
+      };
     };
 }

@@ -4,7 +4,7 @@
 
 # git commit -m "Application of config change at $timestamp"
 
-oco
+# oco
 
 nix flake update
 
