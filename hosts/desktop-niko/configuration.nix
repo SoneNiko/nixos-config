@@ -106,6 +106,7 @@
     discord-canary glxinfo libva-utils glmark2 protonup-qt vivaldi vivaldi-ffmpeg-codecs easyeffects
     steam-tui steamcmd opencommit heroic freecad localsend lsd bat ripgrep ripgrep-all fzf
     nexusmods-app-unfree protontricks wine winetricks signal-desktop qemu libvirt
+    dxvk vkd3d-proton pferd
   ];
 
   # Enable Android development environment
@@ -115,6 +116,12 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
+  };
+
+  # Ensure 32-bit DRI support for 32-bit games and Wine/Proton
+  hardware.opengl = {
+    enable = true;
+    driSupport32Bit = true;
   };
 
   programs.nix-ld.enable = true;

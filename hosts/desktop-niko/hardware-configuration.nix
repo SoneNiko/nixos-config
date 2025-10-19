@@ -55,6 +55,10 @@
         vulkan-loader
         vulkan-validation-layers
         vulkan-tools
+
+        # Vulkan/DX translation helpers for Proton/Wine (D3D11 -> Vulkan)
+        dxvk
+        vkd3d-proton
       ];
     };
     nvidia = {
