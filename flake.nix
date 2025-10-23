@@ -26,6 +26,15 @@
           # make pkgs-stable available to home modules that reference it
           specialArgs = { inherit hm pkgsStable; };
         };
+        laptop-niko = nixpkgs.lib.nixosSystem {
+          inherit system;
+          modules = [
+            ./hosts/laptop-niko/configuration.nix
+            hm.nixosModules.home-manager
+          ];
+          # make pkgs-stable available to home modules that reference it
+          specialArgs = { inherit hm pkgsStable; };
+        };
       };
 
       # Provide a flake-level homeConfiguration so `home-manager --flake .#niko`
