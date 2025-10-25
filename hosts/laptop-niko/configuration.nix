@@ -1,4 +1,4 @@
-# hosts/desktop-niko/configuration.nix
+# hosts/laptop-niko/configuration.nix
 { config, pkgs, pkgsStable, ... }:
 
 {
@@ -8,13 +8,11 @@
     ];
 
   # Bootloader.
-  boot.loader.grub = {
-    enable = true;
-    device = "nodev";
-    useOSProber = true;
-    efiSupport = true;
-    efiInstallAsRemovable = true;
-  };
+    boot.loader.grub.enable = false;
+    boot.loader.systemd-boot.enable = true;
+    boot.loader.efi.canTouchEfiVariables = true;
+    # Bootloader: manage systemd-boot for the laptop. Disable GRUB here to avoid
+    # conflicts with firmware preferring systemd-boot.
 
   # Use latest kernel.
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -32,7 +30,7 @@
     experimental-features = [ "nix-command" "flakes" ];
   };
 
-  networking.hostName = "DESKTOP-NIKO"; # Define your hostname.
+  networking.hostName = "LAPTOP-NIKO"; # Define your hostname.
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -102,11 +100,11 @@
   };
 
   environment.systemPackages = with pkgs; [
-    git vim wget vscode jetbrains-toolbox texliveFull htop tree direnv home-manager gh tldr spotify
-    discord-canary glxinfo libva-utils glmark2 protonup-qt vivaldi vivaldi-ffmpeg-codecs easyeffects
-    steam-tui steamcmd opencommit heroic freecad localsend lsd bat ripgrep ripgrep-all fzf
-    nexusmods-app-unfree protontricks wine winetricks signal-desktop qemu libvirt
-    dxvk vkd3d-proton pferd
+    git vim wget vscode texliveFull htop tree direnv home-manager gh tldr spotify
+    discord-canary glxinfo libva-utils glmark2 vivaldi vivaldi-ffmpeg-codecs
+    opencommit freecad localsend lsd bat ripgrep ripgrep-all fzf
+    protonup-qt protontricks wine winetricks signal-desktop qemu libvirt
+    dxvk vkd3d-proton pferd mattermost-desktop
   ];
 
   # Enable Android development environment
