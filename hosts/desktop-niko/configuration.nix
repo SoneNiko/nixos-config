@@ -106,7 +106,7 @@
     discord-canary glxinfo libva-utils glmark2 protonup-qt vivaldi vivaldi-ffmpeg-codecs easyeffects
     steam-tui steamcmd opencommit heroic freecad localsend lsd bat ripgrep ripgrep-all fzf
     nexusmods-app-unfree protontricks wine winetricks signal-desktop qemu libvirt
-    dxvk vkd3d-proton pferd
+    dxvk vkd3d-proton pferd mattermost-desktop
   ];
 
   # Enable Android development environment
