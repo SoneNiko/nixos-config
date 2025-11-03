@@ -32,15 +32,16 @@
 
   programs.git = {
     enable = true;
-    userName = "Nikolas Heise";
-    userEmail = "nikolasheise683@gmail.com";
     lfs.enable = true;
-    extraConfig = {
+    settings = {
+      user = {
+        name = "Nikolas Heise";
+        email = "nikolasheise683@gmail.com";
+        signingkey = "891AFE673465C446";
+      };
       push.autoSetupRemote = true;
       init.defaultBranch = "main";
-      # Configure Commit Signing
       commit.gpgsign = true;
-      user.signingkey = "891AFE673465C446";
     };
   };
 
