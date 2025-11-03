@@ -48,7 +48,7 @@
       enable32Bit = true;
 
       extraPackages = with pkgs; [
-        vaapiVdpau
+        libva-vdpau-driver
         # libvdpau-va-gl  # Broken upstream - CMake compatibility issue
 
         nvidia-vaapi-driver
