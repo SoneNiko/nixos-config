@@ -151,10 +151,13 @@ Persistent=true
 WantedBy=timers.target
 '';
 
-  # Ensure the timer is enabled/started when the user session starts. This is
-  # idempotent so running multiple times is safe.
-  home.sessionCommands = lib.mkForce (lib.mkIf true ''
-    systemctl --user daemon-reload || true
-    systemctl --user enable --now sanitize-onedrive.timer || true
-  '');
+  # Ensure the timer is enabled/started at home-manager activation. This runs
+  # when the user's home configuration is applied (idempotent).
+  home.activation.enableSanitizeOnedriveTimer = ''
+    if command -v systemctl >/dev/null 2>&1; then
+      # Reload user units and enable the timer
+      systemctl --user daemon-reload || true
+      systemctl --user enable --now sanitize-onedrive.timer || true
+    fi
+  '';
 }
