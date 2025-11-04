@@ -127,4 +127,26 @@
       ln -sf /home/niko/.nix-profile/libexec/android-sdk /home/niko/.android-sdk
     fi
   '';
+
+  # Run the OneDrive sanitizer script every minute as a user systemd timer so
+  # desktop notifications (notify-send) work in the user session.
+  systemd.user = {
+    services.sanitize-onedrive = {
+      description = "Sanitize OneDrive filenames and notify";
+      serviceConfig = {
+        Type = "oneshot";
+        # Use the python interpreter from pkgs and run the script from the repo path
+        ExecStart = "${pkgs.python314}/bin/python3 /home/niko/nixos-config/scripts/sanitize_onedrive.py --yes";
+      };
+    };
+
+    timers.sanitize-onedrive = {
+      wantedBy = [ "timers.target" ];
+      timerConfig = {
+        # Run approximately every minute
+        OnUnitActiveSec = "1min";
+        Persistent = true;
+      };
+    };
+  };
 }
