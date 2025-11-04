@@ -105,7 +105,7 @@
     opencommit freecad localsend lsd bat ripgrep ripgrep-all fzf
     protonup-qt protontricks wine winetricks signal-desktop qemu libvirt
     dxvk vkd3d-proton pferd mattermost-desktop zotero html2pdf libreoffice-qt6-fresh mpv
-    yt-dlp
+    yt-dlp eduvpn-client
     python314 libnotify kdePackages.plasma-browser-integration
   ];
 

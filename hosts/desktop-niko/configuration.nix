@@ -108,7 +108,7 @@
     nexusmods-app-unfree protontricks wine winetricks signal-desktop qemu libvirt
     dxvk vkd3d-proton vulkan-tools zotero pferd mattermost-desktop html2pdf libreoffice-qt6-fresh mpv
     yt-dlp
-    python314 libnotify
+    python314 libnotify eduvpn-client
   ];
 
   # Enable Android development environment
