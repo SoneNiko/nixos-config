@@ -106,7 +106,8 @@
     discord-canary mesa-demos libva-utils glmark2 protonup-qt vivaldi vivaldi-ffmpeg-codecs easyeffects
     steam-tui steamcmd opencommit heroic freecad localsend lsd bat ripgrep ripgrep-all fzf
     nexusmods-app-unfree protontricks wine winetricks signal-desktop qemu libvirt
-    dxvk vkd3d-proton vulkan-tools zotero pferd mattermost-desktop html2pdf libreoffice-qt6-fresh
+    dxvk vkd3d-proton vulkan-tools zotero pferd mattermost-desktop html2pdf libreoffice-qt6-fresh mpv
+    yt-dlp
   ];
 
   # Enable Android development environment
