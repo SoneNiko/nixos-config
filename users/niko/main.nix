@@ -128,25 +128,33 @@
     fi
   '';
 
-  # Run the OneDrive sanitizer script every minute as a user systemd timer so
-  # desktop notifications (notify-send) work in the user session.
-  systemd.user = {
-    services.sanitize-onedrive = {
-      description = "Sanitize OneDrive filenames and notify";
-      serviceConfig = {
-        Type = "oneshot";
-        # Use the python interpreter from pkgs and run the script from the repo path
-        ExecStart = "${pkgs.python314}/bin/python3 /home/niko/nixos-config/scripts/sanitize_onedrive.py --yes";
-      };
-    };
+  # Install systemd user unit files for the OneDrive sanitizer and provide a
+  # session command to enable the timer when the user session starts.
+  home.file."/home/niko/.config/systemd/user/sanitize-onedrive.service".text = ''
+[Unit]
+Description=Sanitize OneDrive filenames and notify
 
-    timers.sanitize-onedrive = {
-      wantedBy = [ "timers.target" ];
-      timerConfig = {
-        # Run approximately every minute
-        OnUnitActiveSec = "1min";
-        Persistent = true;
-      };
-    };
-  };
+[Service]
+Type=oneshot
+ExecStart=${pkgs.python314}/bin/python3 /home/niko/nixos-config/scripts/sanitize_onedrive.py --yes
+'';
+
+  home.file."/home/niko/.config/systemd/user/sanitize-onedrive.timer".text = ''
+[Unit]
+Description=Run sanitize-onedrive every minute
+
+[Timer]
+OnUnitActiveSec=1min
+Persistent=true
+
+[Install]
+WantedBy=timers.target
+'';
+
+  # Ensure the timer is enabled/started when the user session starts. This is
+  # idempotent so running multiple times is safe.
+  home.sessionCommands = lib.mkForce (lib.mkIf true ''
+    systemctl --user daemon-reload || true
+    systemctl --user enable --now sanitize-onedrive.timer || true
+  '');
 }
