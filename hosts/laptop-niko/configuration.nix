@@ -106,7 +106,7 @@
     protonup-qt protontricks wine winetricks signal-desktop qemu libvirt
     dxvk vkd3d-proton pferd mattermost-desktop zotero html2pdf libreoffice-qt6-fresh mpv
     yt-dlp
-    python314 libnotify
+    python314 libnotify kdePackages.plasma-browser-integration
   ];
 
   # Enable Android development environment
