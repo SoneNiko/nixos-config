@@ -101,16 +101,16 @@
 
   environment.systemPackages = with pkgs; [
     git vim wget vscode texliveFull htop tree direnv home-manager gh tldr spotify
-    discord-canary glxinfo libva-utils glmark2 vivaldi vivaldi-ffmpeg-codecs
+    discord-canary mesa-demos libva-utils glmark2 vivaldi vivaldi-ffmpeg-codecs
     opencommit freecad localsend lsd bat ripgrep ripgrep-all fzf
     protonup-qt protontricks wine winetricks signal-desktop qemu libvirt
-    dxvk vkd3d-proton pferd mattermost-desktop
+    dxvk vkd3d-proton pferd mattermost-desktop zotero html2pdf
   ];
 
   # Enable Android development environment
   programs.adb.enable = true;
   
-  # Enable hardware acceleration for Android emulator
+  # Enable hardware acceleration for Android emulator and 32-bit games/Wine/Proton
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
