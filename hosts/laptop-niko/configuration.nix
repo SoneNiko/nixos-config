@@ -33,7 +33,19 @@
   networking.hostName = "LAPTOP-NIKO"; # Define your hostname.
 
   # Enable networking
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    # Enable VPN plugins for NetworkManager (OpenVPN support)
+    plugins = with pkgs; [ networkmanager-openvpn ];
+  };
+
+  # Fix for eduVPN / WireGuard - disable strict reverse path filtering
+  # This allows WireGuard VPN connections to work properly
+  networking.firewall.checkReversePath = "loose";
+
+  # Enable OpenVPN for eduVPN TCP fallback
+  # OpenVPN should work out of the box according to docs, but ensure it's not blocked
+  services.openvpn.servers = { };
 
   # Set your time zone.
   time.timeZone = "Europe/Luxembourg";
@@ -105,7 +117,7 @@
     opencommit freecad localsend lsd bat ripgrep ripgrep-all fzf
     protonup-qt protontricks wine winetricks signal-desktop qemu libvirt
     dxvk vkd3d-proton pferd mattermost-desktop zotero html2pdf libreoffice-qt6-fresh mpv
-    yt-dlp eduvpn-client openvpn3
+    yt-dlp eduvpn-client openvpn3 ntfs3g
     python314 libnotify kdePackages.plasma-browser-integration
   ];
 

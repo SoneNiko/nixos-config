@@ -35,7 +35,19 @@
   networking.hostName = "DESKTOP-NIKO"; # Define your hostname.
 
   # Enable networking
-  networking.networkmanager.enable = true;
+  networking.networkmanager = {
+    enable = true;
+    # Enable VPN plugins for NetworkManager (OpenVPN support)
+    plugins = with pkgs; [ networkmanager-openvpn ];
+  };
+
+  # Fix for eduVPN / WireGuard - disable strict reverse path filtering
+  # This allows WireGuard VPN connections to work properly
+  networking.firewall.checkReversePath = "loose";
+
+  # Enable OpenVPN for eduVPN TCP fallback
+  # OpenVPN should work out of the box according to docs, but ensure it's not blocked
+  services.openvpn.servers = { };
 
   # Set your time zone.
   time.timeZone = "Europe/Luxembourg";
@@ -108,7 +120,7 @@
     nexusmods-app-unfree protontricks wine winetricks signal-desktop qemu libvirt
     dxvk vkd3d-proton vulkan-tools zotero pferd mattermost-desktop html2pdf libreoffice-qt6-fresh mpv
     yt-dlp openvpn3
-    python314 libnotify eduvpn-client
+    python314 libnotify ntfs3g eduvpn-client
   ];
 
   # Enable Android development environment

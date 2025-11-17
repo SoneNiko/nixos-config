@@ -144,10 +144,10 @@ ExecStart=${pkgs.python314}/bin/python3 /home/niko/nixos-config/scripts/sanitize
 Description=Run sanitize-onedrive every minute
 
 [Timer]
-# Run shortly after user session start, then every 15 seconds.
-OnStartupSec=15s
-OnUnitActiveSec=15s
-AccuracySec=1s
+# Run shortly after user session start, then every 10 minutes.
+OnStartupSec=1m
+OnUnitActiveSec=10m
+AccuracySec=30s
 Persistent=true
 
 [Install]

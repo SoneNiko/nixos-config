@@ -10,6 +10,10 @@ Features:
    and renames in-place (no copies left behind).
  - Sends desktop notifications via `notify-send` on Linux when a rename occurs.
  - Offers --dry-run and --verbose modes.
+    - Skips active sync work to avoid racing external tools (e.g. PFERD/onedrive):
+            * files matching temporary patterns like "*.tmp.*"
+            * directories containing such temporary files
+            * recently modified paths (configurable grace period)
 
 Note: Run with care. Prefer --dry-run first.
 """
@@ -22,6 +26,7 @@ import re
 import shutil
 import subprocess
 import sys
+import time
 import unicodedata
 from pathlib import Path
 from typing import Optional
@@ -41,12 +46,12 @@ def normalize_unicode(name: str) -> str:
     return unicodedata.normalize("NFC", name)
 
 
-def sanitize_segment(name: str) -> str:
+def sanitize_segment(name: str, *, is_dir: bool = False) -> str:
     """Return a sanitized single path segment (file or folder name).
 
     Rules applied:
     - Normalize unicode
-    - Strip leading/trailing spaces and trailing dots
+    - Strip leading/trailing spaces; strip trailing dots for files only (keep for dirs)
     - Replace invalid characters with underscore
     - Convert names starting with '~$' (Office temp) to 'x_' + rest
     - Handle reserved names by appending an underscore
@@ -60,8 +65,9 @@ def sanitize_segment(name: str) -> str:
     # Strip leading/trailing spaces
     name = name.strip()
 
-    # Remove trailing dots (Windows/OneDrive issues)
-    name = name.rstrip('.')
+    # Remove trailing dots for files; keep for directories as requested
+    if not is_dir:
+        name = name.rstrip('.')
 
     # Handle Office temp prefix
     if name.startswith('~$'):
@@ -130,12 +136,61 @@ def send_notification(summary: str, body: str) -> None:
         print(f"NOTIFY: {summary} - {body}")
 
 
-def sanitize_tree(root: Path, dry_run: bool = True, verbose: bool = False) -> int:
+TEMP_FILE_PATTERNS = (
+    # PFERD style: <name>.tmp.<random>
+    re.compile(r"\.tmp\.[^/]+$"),
+    # Generic temporary endings
+    re.compile(r"\.partial$"),
+)
+
+
+def is_temp_like(name: str) -> bool:
+    """Heuristics to detect temporary/sync-in-progress files we must not touch."""
+    # Office temp prefix already handled elsewhere but keep here just in case
+    if name.startswith('~$'):
+        return True
+    for pat in TEMP_FILE_PATTERNS:
+        if pat.search(name):
+            return True
+    return False
+
+
+def dir_contains_active_work(path: Path, grace_seconds: int, now: Optional[float] = None) -> bool:
+    """Return True if directory subtree appears to be under active modification.
+
+    Signals:
+      - Any file/dir mtime newer than (now - grace_seconds)
+      - Any filename matching temp-like patterns (e.g., *.tmp.*)
+    """
+    if now is None:
+        now = time.time()
+
+    threshold = now - grace_seconds
+    for dpath, dnames, fnames in os.walk(path):
+        dp = Path(dpath)
+        try:
+            if dp.stat().st_mtime >= threshold:
+                return True
+        except FileNotFoundError:
+            return True
+        for n in fnames:
+            if is_temp_like(n):
+                return True
+            try:
+                if (dp / n).stat().st_mtime >= threshold:
+                    return True
+            except FileNotFoundError:
+                return True
+    return False
+
+
+def sanitize_tree(root: Path, dry_run: bool = True, verbose: bool = False, grace_seconds: int = 600) -> int:
     """Walk the tree bottom-up and sanitize names. Returns number of renames."""
     if not root.exists():
         raise FileNotFoundError(f"Root path does not exist: {root}")
 
     renames = 0
+    now_ts = time.time()
 
     # Walk bottom-up so we rename children before parent directories
     for dirpath, dirnames, filenames in os.walk(root, topdown=False):
@@ -148,6 +203,28 @@ def sanitize_tree(root: Path, dry_run: bool = True, verbose: bool = False) -> in
             if old_path.is_symlink():
                 if verbose:
                     print(f"Skipping symlink: {old_path}")
+                continue
+
+            # Skip hidden (dot) files entirely
+            if fname.startswith('.'):
+                if verbose:
+                    print(f"Skipping dotfile: {old_path}")
+                continue
+
+            # Skip temp-like files or very recently modified files
+            if is_temp_like(fname):
+                if verbose:
+                    print(f"Skipping temp-like file: {old_path}")
+                continue
+            try:
+                if old_path.stat().st_mtime >= now_ts - grace_seconds:
+                    if verbose:
+                        print(f"Skipping recently modified file: {old_path}")
+                    continue
+            except FileNotFoundError:
+                # If it vanished mid-scan, treat as active
+                if verbose:
+                    print(f"Skipping vanished file (likely active): {old_path}")
                 continue
 
             new_fname = sanitize_segment(fname)
@@ -177,7 +254,28 @@ def sanitize_tree(root: Path, dry_run: bool = True, verbose: bool = False) -> in
                     print(f"Skipping symlink dir: {old_dir}")
                 continue
 
-            new_dname = sanitize_segment(dname)
+            # Skip hidden top-level dirs (start with '.') to avoid surprising app behavior
+            if dname.startswith('.'):
+                if verbose:
+                    print(f"Skipping hidden dir: {old_dir}")
+                continue
+
+            # Skip directories that appear active (temp files or recent mtimes)
+            try:
+                if old_dir.stat().st_mtime >= now_ts - grace_seconds:
+                    if verbose:
+                        print(f"Skipping recently modified dir: {old_dir}")
+                    continue
+            except FileNotFoundError:
+                if verbose:
+                    print(f"Skipping vanished dir (likely active): {old_dir}")
+                continue
+            if dir_contains_active_work(old_dir, grace_seconds, now=now_ts):
+                if verbose:
+                    print(f"Skipping active dir (contains temp/young files): {old_dir}")
+                continue
+
+            new_dname = sanitize_segment(dname, is_dir=True)
             if new_dname == dname:
                 continue
 
@@ -203,6 +301,8 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--dry-run", action="store_true", help="Show what would be renamed without changing files")
     p.add_argument("--verbose", action="store_true", help="Verbose output")
     p.add_argument("--yes", action="store_true", help="Do changes without asking for confirmation")
+    p.add_argument("--grace-seconds", type=int, default=600,
+                   help="Skip paths modified within this many seconds and any temp-like trees (default: 600)")
     return p.parse_args()
 
 
@@ -218,7 +318,7 @@ def main() -> None:
             return
 
     try:
-        count = sanitize_tree(root, dry_run=args.dry_run, verbose=args.verbose)
+        count = sanitize_tree(root, dry_run=args.dry_run, verbose=args.verbose, grace_seconds=args.grace_seconds)
     except FileNotFoundError as e:
         print(e, file=sys.stderr)
         sys.exit(2)
