@@ -10,7 +10,13 @@
   # Bootloader.
     boot.loader.grub.enable = false;
     boot.loader.systemd-boot.enable = true;
-    boot.loader.efi.canTouchEfiVariables = true;
+    # Prevent Nix from attempting to change EFI variables / run `bootctl`.
+    # On some systems the firmware or another boot loader owns the ESP entries
+    # and `bootctl update` can fail with a non-zero exit status during
+    # `nixos-rebuild`. Setting `canTouchEfiVariables = false` will avoid
+    # modifying EFI variables while still allowing the NixOS configuration
+    # to use systemd-boot (you keep the current bootloader entries).
+    boot.loader.efi.canTouchEfiVariables = false;
     # Bootloader: manage systemd-boot for the laptop. Disable GRUB here to avoid
     # conflicts with firmware preferring systemd-boot.
 
@@ -208,4 +214,7 @@
   home-manager.users.niko = {
     imports = [ ../../users/niko/main.nix ];
   };
+
+  # Disable systemd-boot-random-seed.service to prevent bootctl invocation.
+  systemd.services."systemd-boot-random-seed".enable = false;
 }
