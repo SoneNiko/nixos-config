@@ -119,7 +119,17 @@
   };
 
   environment.systemPackages = with pkgs; [
-    git vim wget vscode texliveFull htop tree direnv home-manager gh tldr spotify
+    git
+    vim
+    wget
+    vscode
+    texliveFull
+    htop
+    tree
+    direnv
+    home-manager
+    gh
+    tldr spotify
     discord-canary mesa-demos libva-utils glmark2 vivaldi vivaldi-ffmpeg-codecs
     opencommit freecad localsend lsd bat ripgrep ripgrep-all fzf
     protonup-qt protontricks wine winetricks signal-desktop qemu libvirt
