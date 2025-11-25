@@ -29,6 +29,7 @@
     spiceUSBRedirection.enable = true;
     # Enable nested virtualization for better Android emulator performance
     kvmgt.enable = true;
+    docker.enable = true;
   };
 
   # Enable flakes and other experimental features
@@ -104,7 +105,7 @@
   users.users.niko = {
     isNormalUser = true;
     description = "Nikolas Heise";
-    extraGroups = [ "networkmanager" "wheel" "adbusers" "kvm" ];
+    extraGroups = [ "networkmanager" "wheel" "adbusers" "kvm" "docker" ];
     packages = with pkgs; [ kdePackages.kate ];
   };
 
@@ -124,7 +125,7 @@
     protonup-qt protontricks wine winetricks signal-desktop qemu libvirt
     dxvk vkd3d-proton pferd mattermost-desktop zotero html2pdf libreoffice-qt6-fresh mpv
     yt-dlp eduvpn-client openvpn3 ntfs3g
-    python314 libnotify kdePackages.plasma-browser-integration
+    python314 libnotify kdePackages.plasma-browser-integration quarkus
   ];
 
   # Enable Android development environment
@@ -217,4 +218,6 @@
 
   # Disable systemd-boot-random-seed.service to prevent bootctl invocation.
   systemd.services."systemd-boot-random-seed".enable = false;
+
+
 }

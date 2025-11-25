@@ -25,6 +25,7 @@
     spiceUSBRedirection.enable = true;
     # Enable nested virtualization for better Android emulator performance
     kvmgt.enable = true;
+    docker.enable = true;
   };
 
   # Enable flakes and other experimental features
@@ -100,7 +101,7 @@
   users.users.niko = {
     isNormalUser = true;
     description = "Nikolas Heise";
-    extraGroups = [ "networkmanager" "wheel" "adbusers" "kvm" ];
+    extraGroups = [ "networkmanager" "wheel" "adbusers" "kvm" "docker" ];
     packages = with pkgs; [ kdePackages.kate ];
   };
 
@@ -120,7 +121,7 @@
     nexusmods-app-unfree protontricks wine winetricks signal-desktop qemu libvirt
     dxvk vkd3d-proton vulkan-tools zotero pferd mattermost-desktop html2pdf libreoffice-qt6-fresh mpv
     yt-dlp openvpn3
-    python314 libnotify ntfs3g eduvpn-client
+    python314 libnotify ntfs3g eduvpn-client quarkus
   ];
 
   # Enable Android development environment
