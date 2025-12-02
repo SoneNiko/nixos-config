@@ -45,5 +45,24 @@
           modules = [ ./users/niko/main.nix ];
         };
       };
+
+      devShells = {
+        default = pkgs.mkShell {
+          buildInputs = [
+            pkgs.nodejs
+            pkgs.yarn
+            pkgs.vite
+          ];
+        };
+        holoheise = pkgs.mkShell {
+          buildInputs = [
+            pkgs.nodejs
+            pkgs.yarn
+            pkgs.vite
+            pkgs.openjdk21
+            pkgs.quarkus
+          ];
+        };
+      };
     };
 }
