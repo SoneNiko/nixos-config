@@ -54,14 +54,16 @@
             pkgs.vite
           ];
         };
-        holoheise = pkgs.mkShell {
-          buildInputs = [
-            pkgs.nodejs
-            pkgs.yarn
-            pkgs.vite
-            pkgs.openjdk21
-            pkgs.quarkus
-          ];
+        x86_64-linux = {
+          holoheise = pkgs.mkShell {
+            buildInputs = [
+              pkgs.nodejs
+              pkgs.yarn
+              pkgs.vite
+              pkgs.openjdk21
+              pkgs.quarkus
+            ];
+          };
         };
       };
     };
