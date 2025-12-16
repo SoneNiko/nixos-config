@@ -136,6 +136,7 @@
     dxvk vkd3d-proton pferd mattermost-desktop zotero html2pdf libreoffice-qt6-fresh mpv
     yt-dlp eduvpn-client openvpn3 ntfs3g
     python314 libnotify kdePackages.plasma-browser-integration quarkus
+    nodejs yarn vite openjdk21 quarkus
   ];
 
   # Enable Android development environment
