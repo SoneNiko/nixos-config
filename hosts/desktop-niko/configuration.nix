@@ -16,8 +16,8 @@
     efiInstallAsRemovable = true;
   };
 
-  # Use latest kernel.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # Use LTS kernel to keep NVIDIA open driver building.
+  boot.kernelPackages = pkgs.linuxPackages_6_6;
 
   # Enable KVM virtualization
   virtualisation = {
@@ -66,6 +66,23 @@
     LC_PAPER = "de_DE.UTF-8";
     LC_TELEPHONE = "de_DE.UTF-8";
     LC_TIME = "de_DE.UTF-8";
+  };
+
+  # Prevent unintended sleep/suspend/hibernate and ignore lid/power keys
+  services.logind = {
+    lidSwitch = "ignore";
+    lidSwitchDocked = "ignore";
+    settings = {
+      Login = {
+        IdleAction = "ignore";
+        IdleActionSec = "0";
+        HandleSuspendKey = "ignore";
+        HandleLidSwitch = "ignore";
+        HandleLidSwitchDocked = "ignore";
+        HandleHibernateKey = "ignore";
+        HandlePowerKey = "ignore";
+      };
+    };
   };
 
   # Enable the X11 windowing system.
