@@ -139,7 +139,7 @@
     dxvk vkd3d-proton vulkan-tools zotero pferd mattermost-desktop html2pdf libreoffice-qt6-fresh mpv
     yt-dlp openvpn3
     python314 libnotify ntfs3g eduvpn-client quarkus
-    nodejs yarn vite openjdk21 quarkus
+    nodejs yarn vite openjdk21 quarkus obsidian
   ];
 
   # Enable Android development environment
