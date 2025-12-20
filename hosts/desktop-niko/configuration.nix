@@ -69,19 +69,15 @@
   };
 
   # Prevent unintended sleep/suspend/hibernate and ignore lid/power keys
-  services.logind = {
-    lidSwitch = "ignore";
-    lidSwitchDocked = "ignore";
-    settings = {
-      Login = {
-        IdleAction = "ignore";
-        IdleActionSec = "0";
-        HandleSuspendKey = "ignore";
-        HandleLidSwitch = "ignore";
-        HandleLidSwitchDocked = "ignore";
-        HandleHibernateKey = "ignore";
-        HandlePowerKey = "ignore";
-      };
+  services.logind.settings = {
+    Login = {
+      IdleAction = "ignore";
+      IdleActionSec = "0";
+      HandleSuspendKey = "ignore";
+      HandleLidSwitch = "ignore";
+      HandleLidSwitchDocked = "ignore";
+      HandleHibernateKey = "ignore";
+      HandlePowerKey = "ignore";
     };
   };
 
@@ -158,9 +154,19 @@
   # Font configuration
   fonts = {
     enableDefaultPackages = true;
-    packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
+    packages = with pkgs; [
+      nerd-fonts.jetbrains-mono
+      noto-fonts
+      noto-fonts-cjk-serif
+      noto-fonts-cjk-sans
+      noto-fonts-color-emoji
+    ];
     fontconfig = {
-      defaultFonts = { monospace = [ "JetBrainsMono Nerd Font" ]; };
+      defaultFonts = {
+        monospace = [ "JetBrainsMono Nerd Font" ];
+        sansSerif = [ "Noto Sans" "Noto Sans CJK SC" ];
+        serif = [ "Noto Serif" "Noto Serif CJK SC" ];
+      };
     };
   };
 
