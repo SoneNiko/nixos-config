@@ -160,6 +160,7 @@
       noto-fonts-cjk-serif
       noto-fonts-cjk-sans
       noto-fonts-color-emoji
+      google-fonts
     ];
     fontconfig = {
       defaultFonts = {
