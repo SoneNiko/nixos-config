@@ -52,7 +52,8 @@
 
   # Remap CHERRY keyboard media button (scancode c0192) to Play/Pause
   services.udev.extraHwdb = ''
-    evdev:input:b0003v046ApC12A*
+    # Broader match to catch all interfaces on this device
+    evdev:input:b*v046ApC12A*
      KEYBOARD_KEY_c0192=playpause
   '';
 
