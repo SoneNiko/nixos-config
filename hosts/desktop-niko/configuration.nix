@@ -50,6 +50,12 @@
   # OpenVPN should work out of the box according to docs, but ensure it's not blocked
   services.openvpn.servers = { };
 
+    # Enable Mullvad VPN (systemd-resolved must be enabled for full support)
+    services.mullvad-vpn = {
+      enable = true;
+      package = pkgs.mullvad-vpn;
+    };
+
   # Remap CHERRY keyboard media button (scancode c0192) to Play/Pause
   services.udev.extraHwdb = ''
     # Broader match to catch all interfaces on this device
