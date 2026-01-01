@@ -50,6 +50,12 @@
   # OpenVPN should work out of the box according to docs, but ensure it's not blocked
   services.openvpn.servers = { };
 
+  # Remap CHERRY keyboard media button (scancode c0192) to Play/Pause
+  services.udev.extraHwdb = ''
+    evdev:input:b0003v046ApC12A*
+     KEYBOARD_KEY_c0192=playpause
+  '';
+
   # Set your time zone.
   time.timeZone = "Europe/Luxembourg";
 
