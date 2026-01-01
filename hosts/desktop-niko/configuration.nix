@@ -56,6 +56,9 @@
       package = pkgs.mullvad-vpn;
     };
 
+    # Enable systemd-resolved for proper DNS with Mullvad VPN
+    services.resolved.enable = true;
+
   # Remap CHERRY keyboard media button (scancode c0192) to Play/Pause
   services.udev.extraHwdb = ''
     # Broader match to catch all interfaces on this device
