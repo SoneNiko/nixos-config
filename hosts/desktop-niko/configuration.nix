@@ -153,7 +153,7 @@
     python314 libnotify ntfs3g eduvpn-client quarkus
     nodejs yarn vite openjdk21 quarkus obsidian
     # Build tools for Python venv and compilation
-    gcc gnumake pkg-config binutils
+    gcc gnumake pkg-config binutils prismlauncher
   ];
 
   # Enable Android development environment
