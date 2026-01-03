@@ -113,8 +113,11 @@
   # Configure console keymap
   console.keyMap = "uk";
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
+  # Enable CUPS to print documents and HP printer support.
+  services.printing = {
+    enable = true;
+    drivers = [ pkgs.hplip ];
+  };
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
