@@ -50,6 +50,22 @@
   # OpenVPN should work out of the box according to docs, but ensure it's not blocked
   services.openvpn.servers = { };
 
+    # Enable Mullvad VPN (systemd-resolved must be enabled for full support)
+    services.mullvad-vpn = {
+      enable = true;
+      package = pkgs.mullvad-vpn;
+    };
+
+    # Enable systemd-resolved for proper DNS with Mullvad VPN
+    services.resolved.enable = true;
+
+  # Remap CHERRY keyboard media button (scancode c0192) to Play/Pause
+  services.udev.extraHwdb = ''
+    # Broader match to catch all interfaces on this device
+    evdev:input:b*v046ApC12A*
+     KEYBOARD_KEY_c0192=playpause
+  '';
+
   # Set your time zone.
   time.timeZone = "Europe/Luxembourg";
 
@@ -69,19 +85,15 @@
   };
 
   # Prevent unintended sleep/suspend/hibernate and ignore lid/power keys
-  services.logind = {
-    lidSwitch = "ignore";
-    lidSwitchDocked = "ignore";
-    settings = {
-      Login = {
-        IdleAction = "ignore";
-        IdleActionSec = "0";
-        HandleSuspendKey = "ignore";
-        HandleLidSwitch = "ignore";
-        HandleLidSwitchDocked = "ignore";
-        HandleHibernateKey = "ignore";
-        HandlePowerKey = "ignore";
-      };
+  services.logind.settings = {
+    Login = {
+      IdleAction = "ignore";
+      IdleActionSec = "0";
+      HandleSuspendKey = "ignore";
+      HandleLidSwitch = "ignore";
+      HandleLidSwitchDocked = "ignore";
+      HandleHibernateKey = "ignore";
+      HandlePowerKey = "ignore";
     };
   };
 
@@ -101,8 +113,11 @@
   # Configure console keymap
   console.keyMap = "uk";
 
-  # Enable CUPS to print documents.
-  services.printing.enable = true;
+  # Enable CUPS to print documents and HP printer support.
+  services.printing = {
+    enable = true;
+    drivers = [ pkgs.hplip ];
+  };
 
   # Enable sound with pipewire.
   services.pulseaudio.enable = false;
@@ -139,7 +154,9 @@
     dxvk vkd3d-proton vulkan-tools zotero pferd mattermost-desktop html2pdf libreoffice-qt6-fresh mpv
     yt-dlp openvpn3
     python314 libnotify ntfs3g eduvpn-client quarkus
-    nodejs yarn vite openjdk21 quarkus
+    nodejs yarn vite openjdk21 quarkus obsidian
+    # Build tools for Python venv and compilation
+    gcc gnumake pkg-config binutils prismlauncher
   ];
 
   # Enable Android development environment
@@ -156,9 +173,20 @@
   # Font configuration
   fonts = {
     enableDefaultPackages = true;
-    packages = with pkgs; [ nerd-fonts.jetbrains-mono ];
+    packages = with pkgs; [
+      nerd-fonts.jetbrains-mono
+      noto-fonts
+      noto-fonts-cjk-serif
+      noto-fonts-cjk-sans
+      noto-fonts-color-emoji
+      google-fonts
+    ];
     fontconfig = {
-      defaultFonts = { monospace = [ "JetBrainsMono Nerd Font" ]; };
+      defaultFonts = {
+        monospace = [ "JetBrainsMono Nerd Font" ];
+        sansSerif = [ "Noto Sans" "Noto Sans CJK SC" ];
+        serif = [ "Noto Serif" "Noto Serif CJK SC" ];
+      };
     };
   };
 

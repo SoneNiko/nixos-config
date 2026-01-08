@@ -137,6 +137,8 @@
     yt-dlp eduvpn-client openvpn3 ntfs3g
     python314 libnotify kdePackages.plasma-browser-integration quarkus
     nodejs yarn vite openjdk21 quarkus obsidian
+    # Build tools for Python venv and compilation
+    gcc gnumake pkg-config binutils
   ];
 
   # Enable Android development environment
