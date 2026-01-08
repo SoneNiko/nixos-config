@@ -54,6 +54,15 @@
             pkgs.vite
           ];
         };
+        python = pkgs.mkShell {
+          buildInputs = [
+            (pkgs.python311.withPackages (ps: [
+              ps.numpy
+              ps.matplotlib
+              ps.pandas
+            ]))
+          ];
+        };
         x86_64-linux = {
           holoheise = pkgs.mkShell {
             buildInputs = [
