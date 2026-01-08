@@ -230,5 +230,6 @@
   # Disable systemd-boot-random-seed.service to prevent bootctl invocation.
   systemd.services."systemd-boot-random-seed".enable = false;
 
+  hardware.fw-fanctrl.enable = true;
 
 }
