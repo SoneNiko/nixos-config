@@ -153,7 +153,7 @@
     nexusmods-app-unfree protontricks wine winetricks signal-desktop qemu libvirt
     dxvk vkd3d-proton vulkan-tools zotero pferd mattermost-desktop html2pdf libreoffice-qt6-fresh mpv
     yt-dlp openvpn3
-    python314 libnotify ntfs3g eduvpn-client quarkus
+    python314 libnotify ntfs3g eduvpn-client
     nodejs yarn vite openjdk21 quarkus obsidian
     # Build tools for Python venv and compilation
     gcc gnumake pkg-config binutils prismlauncher

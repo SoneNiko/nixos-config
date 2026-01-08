@@ -141,8 +141,6 @@
     gcc gnumake pkg-config binutils
   ];
 
-  # Enable Android development environment
-  programs.adb.enable = true;
   
   # Enable hardware acceleration for Android emulator and 32-bit games/Wine/Proton
   hardware.graphics = {
@@ -228,6 +226,15 @@
   home-manager.users.niko = {
     imports = [ ../../users/niko/main.nix ];
   };
+
+  # Enable Mullvad VPN (systemd-resolved must be enabled for full support)
+  services.mullvad-vpn = {
+    enable = true;
+    package = pkgs.mullvad-vpn;
+  };
+
+  # Enable systemd-resolved for proper DNS with Mullvad VPN
+  services.resolved.enable = true;
 
   # Disable systemd-boot-random-seed.service to prevent bootctl invocation.
   systemd.services."systemd-boot-random-seed".enable = false;
